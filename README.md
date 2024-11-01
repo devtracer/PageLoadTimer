@@ -4,7 +4,7 @@
 
 ### How to install?
 
-1. Download [the ```PageLoadTimerExtension v1.0.0``` folder](https://github.com/devtracer/PageLoadTimerExtension/archive/refs/heads/main.zip)
+1. Download the ```PageLoadTimerExtension v1.0.0``` folder [by clicking here.](https://github.com/devtracer/PageLoadTimerExtension/archive/refs/heads/main.zip)
 
 1. Go to [chrome://extensions/](chrome://extensions/)
 
