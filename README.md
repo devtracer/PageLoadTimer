@@ -1,4 +1,6 @@
-# "PageLoadTimerExtension", measures and displays the page's load time.
+# PageLoadTimerExtension
+
+measures and displays the page's load time.
 
 ### How to install?
 
