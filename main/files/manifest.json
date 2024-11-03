@@ -7,9 +7,9 @@
     "activeTab"
   ],
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "clock.png",
+    "48": "clock.png",
+    "128": "clock.png"
   },
   "content_scripts": [
     {
@@ -21,7 +21,7 @@
     "default_popup": "popup.html",
     "default_icon": "clock.png",
     "badge": {
-      "text": "\u200B$" // Placeholder for the load time
+      "text": "\u200B$"
     }
   },
   "background": {
