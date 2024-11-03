@@ -1,5 +1,9 @@
 # PageLoadTimerExtension
 
+The icon's credit: 
+
+<a href="https://www.flaticon.com/free-icons/clock" title="clock icons">Clock icons created by Those Icons - Flaticon</a>
+
 measures and displays the page's load time.
 
 ### How to install?
