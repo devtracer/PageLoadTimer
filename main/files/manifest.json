@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "An extension that measures and displays the load time of web pages, enhancing your browsing experience.",
   "permissions": [
-    "activeTab"
+    "activeTab" // Ensure you add any other permissions you might need later
   ],
   "icons": {
     "16": "clock.png",
@@ -19,10 +19,7 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "clock.png",
-    "badge": {
-      "text": "\u200B$"
-    }
+    "default_icon": "clock.png" // Consider adding different icons for different sizes if needed
   },
   "background": {
     "service_worker": "background.js"
