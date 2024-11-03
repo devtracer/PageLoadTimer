@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "PageLoadTimerExtension v1.0.0",
+  "version": "1.0",
+  "description": "Measures and displays page load time.",
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "content.js" ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "badge": {
+      "text": "\u200B$" // Placeholder for the load time
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
