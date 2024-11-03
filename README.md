@@ -2,6 +2,9 @@
 
 ## An extension that measures and displays the load time of web pages, enhancing your browsing experience.
 
+![image](https://github.com/user-attachments/assets/20d863cc-dd85-44cb-95a8-d8ca9bf7e24b)
+
+
 The icon's credit: 
 
 <a href="https://www.flaticon.com/free-icons/clock" title="clock icons">Clock icons created by Those Icons - Flaticon</a>
