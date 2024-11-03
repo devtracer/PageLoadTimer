@@ -4,14 +4,28 @@ measures and displays the page's load time.
 
 ### How to install?
 
-1. Download the ```PageLoadTimerExtension v1.0.0``` folder [by clicking here.](https://github.com/devtracer/PageLoadTimerExtension/archive/refs/heads/main.zip)
+1. Download the repository from ```git``` with this following command:
 
-1. Go to [chrome://extensions/](chrome://extensions/)
+```
+git clone https://github.com/devtracer/PageLoadTimerExtension.git
+```
+2. Go to [chrome://extensions/](chrome://extensions/)
 
-2. Turn on the ```Developer Mode```
+3. Turn on the ```Developer Mode```
 
-3. Press the ```Load Unpacked```
+4. Press the "Pack Extension" button
 
-4. Choose the downloaded file
+5. Steps to recieving the key:
 
-5. Done! you should see the extension between your extensions.
+    - from this menu, select the first "Browse" button:
+
+      ![image](https://github.com/user-attachments/assets/e691e631-b172-4a50-b8f6-2007b8bec587)
+
+    - 
+
+
+4. Press the ```Load Unpacked```
+
+5. Choose the downloaded file
+
+6. Done! you should see the extension between your extensions.
