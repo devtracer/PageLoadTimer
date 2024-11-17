@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Metrics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .scrollable-table {
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Performance Metrics</h1>
+
+  <!-- Bar Chart Container -->
+  <div class="chart-container">
+    <canvas id="barChart"></canvas>
+  </div>
+
+  <!-- Scrollable Table -->
+  <div class="scrollable-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>URL</th>
+          <th>DOM Load Time (ms)</th>
+          <th>Load Time (ms)</th>
+        </tr>
+      </thead>
+      <tbody id="resultsTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    // Retrieve and parse performance data from localStorage
+    const performanceData = JSON.parse(localStorage.getItem('performanceData')) || {};
+
+    // Prepare data for the bar chart (last 10 saved times)
+    const recentEntries = [];
+    const chartLabels = [];
+    const domLoadTimes = [];
+    const loadTimes = [];
+
+    Object.keys(performanceData).forEach((url) => {
+      const entries = performanceData[url];
+      recentEntries.push(...entries.map(entry => ({ ...entry, url })));
+    });
+
+    // Sort entries by date (descending) and limit to the last 10
+    recentEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const last10Entries = recentEntries.slice(0, 10).reverse();
+
+    // Populate chart data
+    last10Entries.forEach(entry => {
+      chartLabels.push(new URL(entry.url).hostname); // Use hostname for shorter labels
+      domLoadTimes.push(entry.domLoadTime);
+      loadTimes.push(entry.loadTime);
+    });
+
+    // Create bar chart
+    const ctx = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartLabels,
+        datasets: [
+          {
+            label: 'DOM Load Time (ms)',
+            data: domLoadTimes,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+          },
+          {
+            label: 'Load Time (ms)',
+            data: loadTimes,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+        },
+        scales: {
+          x: { stacked: false },
+          y: { beginAtZero: true },
+        },
+      },
+    });
+
+    // Prepare data for the scrollable table (previous 50 results)
+    const tableBody = document.getElementById('resultsTable');
+    const last50Entries = recentEntries.slice(0, 50);
+
+    last50Entries.forEach(entry => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${new Date(entry.date).toLocaleString()}</td>
+        <td>${entry.url}</td>
+        <td>${entry.domLoadTime}</td>
+        <td>${entry.loadTime}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  </script>
+</body>
+</html>
