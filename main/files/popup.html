@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Load Time Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Main Page -->
+    <div class="container">
+        <button id="showGraphBtn" class="btn">Show Website Load Time Graph</button>
+        <button id="settingsBtn" class="btn">Settings</button>
+    </div>
 
+    <!-- Popup for Graph -->
+    <div id="graphPopup" class="popup">
+        <div class="popup-content">
+            <button id="closeGraph" class="close-btn">X</button>
+            <canvas id="loadTimeChart"></canvas>
+            <button id="saveDataBtn" class="btn">Save Data</button>
+        </div>
+    </div>
+
+    <!-- Settings Menu -->
+    <div id="settingsMenu" class="popup">
+        <div class="popup-content">
+            <button id="closeSettings" class="close-btn">X</button>
+            <h2>Settings</h2>
+
+            <!-- Folder Picker for Storage -->
+            <button id="browseFolderBtn" class="btn">Choose Where to save the configurations.</button>
+            <input type="file" id="storageLocation" webkitdirectory style="display: none;" />
+
+            <label for="website">Website to save their links with their time:</label>
+            <input type="text" id="website" placeholder="Enter website URL" />
+
+            <!-- Separate line for Save Website Link Setting -->
+            <div>
+                <label for="saveLinkCheckbox">
+                    <input type="checkbox" id="saveLinkCheckbox" />
+                    Save these websites' links with their time?
+                </label>
+            </div>
+
+            <!-- Separate line for Latest Data Points to Save -->
+            <div>
+                <label for="latestDataCount">How many latest data points to save?</label>
+                <input type="number" id="latestDataCount" min="1" value="30" />
+            </div>
+
+            <div>
+                <label for="shareWithServer">
+                    <input type="checkbox" id="serverCheckbox" />
+                    Want to share data with our server? (These informations will be used for search purposes only, you can check term and conditions for more.)
+                </label>
+            </div>
+
+            <div>
+                <a href="https://github.com/devtracer/PageLoadTimerExtension/blob/main/TermsConditions.md" target="_blank" id="termsLink">Terms and Conditions</a>
+            </div>
+
+            <div>
+                <a href="https://github.com/devtracer/PageLoadTimerExtension" target="_blank" id="termsLink">Check source code</a>
+            </div>
+
+            <button id="saveSettings" class="btn">Save Settings</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
