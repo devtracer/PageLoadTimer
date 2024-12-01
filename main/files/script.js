@@ -12,39 +12,32 @@ let settings = {
     latestDataCount: 5
 };
 
-// Load Google Charts library
-google.charts.load('current', { packages: ['corechart'] });
-
 // Function to display the graph popup
 document.getElementById('showGraphBtn').addEventListener('click', function() {
     const graphPopup = document.getElementById('graphPopup');
     graphPopup.style.display = 'flex';
 
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        const data = new google.visualization.DataTable();
-        data.addColumn('string', 'Website');
-        data.addColumn('number', 'Load Time (seconds)');
-
-        // Add sample data rows
-        for (let i = 0; i < sampleData.websites.length; i++) {
-            data.addRow([sampleData.websites[i], sampleData.loadTimes[i]]);
+    const ctx = document.getElementById('loadTimeChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: sampleData.websites,
+            datasets: [{
+                label: 'Load Time (seconds)',
+                data: sampleData.loadTimes,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-
-        const options = {
-            title: 'Website Load Time (seconds)',
-            hAxis: { title: 'Website' },
-            vAxis: { title: 'Load Time (seconds)', minValue: 0 },
-            legend: { position: 'none' },
-            bar: { groupWidth: '75%' },
-            colors: ['#4BC0C0'],
-            chartArea: { width: '80%', height: '70%' }
-        };
-
-        const chart = new google.visualization.BarChart(document.getElementById('loadTimeChart'));
-        chart.draw(data, options);
-    }
+    });
 });
 
 // Function to close the graph popup
@@ -80,8 +73,8 @@ document.getElementById('saveSettings').addEventListener('click', function() {
     const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
 
     // Get selected folder (only accessible when user selects a folder)
-    const storageLocation = storageLocationInput.files.length > 0
-        ? storageLocationInput.files[0].webkitRelativePath.split('/')[0]
+    const storageLocation = storageLocationInput.files.length > 0 
+        ? storageLocationInput.files[0].webkitRelativePath.split('/')[0] 
         : '';
 
     if (storageLocation && website && latestDataCount > 0) {
