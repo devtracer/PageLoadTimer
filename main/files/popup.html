@@ -10,7 +10,7 @@
 <body>
     <!-- Main Page -->
     <div class="container">
-        <button id="showGraphBtn" class="btn">Show Website Load Time Graph</button>
+        <button id="showGraphBtn" class="btn">Show Load Time Graph</button>
         <button id="settingsBtn" class="btn">Settings</button>
     </div>
 
@@ -18,6 +18,7 @@
     <div id="graphPopup" class="popup">
         <div class="popup-content">
             <button id="closeGraph" class="close-btn">X</button>
+            <h2>Website Load Time Graph</h2>
             <canvas id="loadTimeChart"></canvas>
             <button id="saveDataBtn" class="btn">Save Data</button>
         </div>
@@ -28,43 +29,33 @@
         <div class="popup-content">
             <button id="closeSettings" class="close-btn">X</button>
             <h2>Settings</h2>
-
-            <!-- Folder Picker for Storage -->
-            <button id="browseFolderBtn" class="btn">Choose Where to save the configurations.</button>
-            <input type="file" id="storageLocation" webkitdirectory style="display: none;" />
-
-            <label for="website">Website to save their links with their time:</label>
-            <input type="text" id="website" placeholder="Enter website URL" />
-
-            <!-- Separate line for Save Website Link Setting -->
+            <div>
+                <button id="browseFolderBtn" class="btn">Choose Configuration Folder</button>
+                <input type="file" id="storageLocation" webkitdirectory style="display: none;" />
+            </div>
+            <div>
+                <label for="website">Website URL:</label>
+                <input type="text" id="website" placeholder="Enter website URL" />
+            </div>
             <div>
                 <label for="saveLinkCheckbox">
                     <input type="checkbox" id="saveLinkCheckbox" />
-                    Save these websites' links with their time?
+                    Save website links with load times
                 </label>
             </div>
-
-            <!-- Separate line for Latest Data Points to Save -->
             <div>
-                <label for="latestDataCount">How many latest data points to save?</label>
+                <label for="latestDataCount">Save latest data points:</label>
                 <input type="number" id="latestDataCount" min="1" value="30" />
             </div>
-
             <div>
-                <label for="shareWithServer">
+                <label for="serverCheckbox">
                     <input type="checkbox" id="serverCheckbox" />
-                    Want to share data with our server? (These informations will be used for search purposes only, you can check term and conditions for more.)
+                    Share data with the server (view <a href="https://github.com/devtracer/PageLoadTimerExtension/blob/main/TermsConditions.md" target="_blank" id="termsLink">Terms</a>)
                 </label>
             </div>
-
             <div>
-                <a href="https://github.com/devtracer/PageLoadTimerExtension/blob/main/TermsConditions.md" target="_blank" id="termsLink">Terms and Conditions</a>
+                <a href="https://github.com/devtracer/PageLoadTimerExtension" target="_blank" id="termsLink">View Source Code</a>
             </div>
-
-            <div>
-                <a href="https://github.com/devtracer/PageLoadTimerExtension" target="_blank" id="termsLink">Check source code</a>
-            </div>
-
             <button id="saveSettings" class="btn">Save Settings</button>
         </div>
     </div>

@@ -104,14 +104,11 @@ function downloadFile(content, filename) {
     link.click();
 }
 
-// Save data button (on the graph page) that saves the graph data to the user's chosen directory
+// Function to save load time data
 document.getElementById('saveDataBtn').addEventListener('click', function() {
-    const dataToSave = {
-        websites: sampleData.websites.slice(0, settings.latestDataCount),
-        loadTimes: sampleData.loadTimes.slice(0, settings.latestDataCount)
+    const data = {
+        websites: sampleData.websites,
+        loadTimes: sampleData.loadTimes
     };
-
-    // Convert to JSON and download
-    const dataJson = JSON.stringify(dataToSave);
-    downloadFile(dataJson, 'load_time_data.json');
+    downloadFile(JSON.stringify(data), 'load_time_data.json');
 });
