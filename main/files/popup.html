@@ -5,7 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Load Time Tracker</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Popup and other style changes */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%; /* Make the popup bigger */
+            max-width: 1000px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .close-btn {
+            float: right;
+            background-color: #ff4d4d;
+            border: none;
+            padding: 10px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        canvas {
+            width: 100%;
+            height: 400px;
+            background-color: #f3f3f3;
+        }
+    </style>
 </head>
 <body>
     <!-- Main Page -->
@@ -60,6 +111,44 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('showGraphBtn').addEventListener('click', function() {
+            const graphPopup = document.getElementById('graphPopup');
+            graphPopup.style.display = 'flex';
+            drawChart(); // Call the chart drawing function
+        });
+
+        document.getElementById('closeGraph').addEventListener('click', function() {
+            document.getElementById('graphPopup').style.display = 'none';
+        });
+
+        function drawChart() {
+            const canvas = document.getElementById('loadTimeChart');
+            const ctx = canvas.getContext('2d');
+
+            const sampleData = {
+                websites: ["google.com", "yahoo.com", "example.com", "github.com"],
+                loadTimes: [1.2, 2.5, 3.0, 0.8]
+            };
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = 100;
+            const maxLoadTime = Math.max(...sampleData.loadTimes);
+            const yStart = canvas.height - 50;
+
+            sampleData.websites.forEach((site, index) => {
+                const xPos = index * (barWidth + 20);
+                const barHeight = (sampleData.loadTimes[index] / maxLoadTime) * 300;
+
+                ctx.fillStyle = 'rgba(75, 192, 192, 0.8)';
+                ctx.fillRect(xPos, yStart - barHeight, barWidth, barHeight);
+
+                ctx.fillStyle = 'black';
+                ctx.fillText(site, xPos + barWidth / 8, yStart + 15);
+                ctx.fillText(sampleData.loadTimes[index].toFixed(1), xPos + barWidth / 8, yStart - barHeight - 5);
+            });
+        }
+    </script>
 </body>
 </html>
