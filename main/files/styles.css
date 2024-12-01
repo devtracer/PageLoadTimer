@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container {
@@ -17,12 +17,13 @@ body {
 .btn {
     background-color: #4CAF50;
     color: white;
-    padding: 15px 32px;
+    padding: 10px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     margin: 10px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn:hover {
@@ -38,23 +39,27 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .popup-content {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 400px;
-    max-width: 90%;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     text-align: center;
+    position: relative;
 }
 
 .close-btn {
     background-color: red;
     color: white;
-    padding: 10px;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -68,61 +73,34 @@ body {
 }
 
 /* Settings Form */
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-/* Styling for the settings container */
-#settingsMenu .popup-content {
-    padding: 20px;
-    max-width: 400px;
-    margin: auto;
-}
-
-#settingsMenu label {
+label {
     display: block;
-    margin-bottom: 8px;
+    margin: 10px 0 5px;
     font-size: 14px;
+    text-align: left;
 }
 
-#settingsMenu input[type="text"],
-#settingsMenu input[type="number"] {
+input[type="text"],
+input[type="number"] {
     width: 100%;
     padding: 8px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
+    margin: 5px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-#settingsMenu .btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#settingsMenu .btn:hover {
-    background-color: #45a049;
-}
-
-/* For the Terms Link */
-#settingsMenu #termsLink {
+#termsLink {
     font-size: 12px;
     color: #007bff;
     text-decoration: none;
 }
 
-#settingsMenu #termsLink:hover {
+#termsLink:hover {
     text-decoration: underline;
 }
 
-#settingsMenu div {
-    margin-bottom: 10px;
+#settingsMenu .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
 }
-
