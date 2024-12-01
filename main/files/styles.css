@@ -44,10 +44,10 @@ body {
 
 .popup-content {
     background-color: white;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
-    width: 400px;
-    max-width: 90%;
+    width: 600px;  /* Increased width */
+    max-width: 90%; /* Keeps it responsive */
     text-align: center;
 }
 
