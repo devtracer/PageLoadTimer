@@ -75,34 +75,47 @@ document.getElementById('closeSettings').addEventListener('click', function() {
 });
 
 // Function to save settings (store as JSON)
-document.getElementById('saveSettings').addEventListener('click', function() {
+document.getElementById('saveSettings').addEventListener('click', function () {
     const website = document.getElementById('website').value;
     const saveLink = document.getElementById('saveLinkCheckbox').checked;
     const serverSave = document.getElementById('serverCheckbox').checked;
     const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
 
-    // Get selected folder (only accessible when user selects a folder)
-    const storageLocation = storageLocationInput.files.length > 0 
-        ? storageLocationInput.files[0].webkitRelativePath.split('/')[0] 
-        : '';
+    if (website && latestDataCount > 0) {
+        const settings = {
+            website: website,
+            saveLink: saveLink,
+            latestDataCount: latestDataCount,
+            serverSave: serverSave
+        };
 
-    if (storageLocation && website && latestDataCount > 0) {
-        settings.storageLocation = storageLocation;
-        settings.website = website;
-        settings.saveLink = saveLink;
-        settings.latestDataCount = latestDataCount;
-        settings.serverSave = serverSave;
-
-        // Save settings as JSON
+        // Prepare settings.json
         const settingsJson = JSON.stringify(settings);
-        downloadFile(settingsJson, 'settings.json');
 
-        alert('Settings saved!');
+        // Prepare data.json with empty object
+        const dataJson = JSON.stringify({});
+
+        // Download both files
+        downloadFile(settingsJson, 'settings.json');
+        downloadFile(dataJson, 'data.json');
+
+        alert('Settings saved and files downloaded!');
         document.getElementById('settingsMenu').style.display = 'none';
     } else {
         alert('Please fill in all fields!');
     }
 });
+
+// Helper function to trigger file download
+function downloadFile(content, fileName) {
+    const blob = new Blob([content], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
 
 // Function to download JSON file
 function downloadFile(content, filename) {
