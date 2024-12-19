@@ -86,14 +86,13 @@ document.getElementById('browseFolderBtn').addEventListener('click', function(ev
     storageInput.focus(); // Focus on the input for the user
 });
 
-document.getElementById('saveSettings').addEventListener('click', function() {
+document.getElementById('saveSettings').addEventListener('click', async function() {
     const storageLocationInput = document.getElementById('storageLocation');
     const website = document.getElementById('website').value.trim();
     const saveLink = document.getElementById('saveLinkCheckbox').checked;
     const serverSave = document.getElementById('serverCheckbox').checked;
     const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
 
-    // Get the entered folder path
     const storageLocation = storageLocationInput.value.trim();
 
     if (storageLocation && website && latestDataCount > 0) {
@@ -105,19 +104,27 @@ document.getElementById('saveSettings').addEventListener('click', function() {
 
         const settingsJson = JSON.stringify(settings);
 
-        // Use the Chrome downloads API to save the file
-        chrome.downloads.download({
-            url: URL.createObjectURL(new Blob([settingsJson], { type: 'application/json' })),
-            filename: `${storageLocation}/settings.json`, // Save inside the user-specified folder
-            conflictAction: 'overwrite'
-        }, function(downloadId) {
-            if (chrome.runtime.lastError) {
-                alert(`Error: ${chrome.runtime.lastError.message}`);
-            } else {
-                alert('Settings saved successfully!');
-                document.getElementById('settingsMenu').style.display = 'none';
-            }
-        });
+        try {
+            // Request a file handle
+            const fileHandle = await window.showSaveFilePicker({
+                suggestedName: 'settings.json',
+                types: [{
+                    description: 'JSON Files',
+                    accept: { 'application/json': ['.json'] }
+                }]
+            });
+
+            // Write to the file
+            const writable = await fileHandle.createWritable();
+            await writable.write(settingsJson);
+            await writable.close();
+
+            alert('Settings saved!');
+            document.getElementById('settingsMenu').style.display = 'none';
+        } catch (err) {
+            console.error('Save canceled or failed:', err);
+            alert('Failed to save settings!');
+        }
     } else {
         alert('Please fill in all fields!');
     }
