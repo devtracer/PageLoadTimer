@@ -86,18 +86,15 @@ document.getElementById('browseFolderBtn').addEventListener('click', function(ev
     storageInput.focus(); // Focus on the input for the user
 });
 
-// Function to save settings (store as JSON)
 document.getElementById('saveSettings').addEventListener('click', function() {
     const storageLocationInput = document.getElementById('storageLocation');
-    const website = document.getElementById('website').value;
+    const website = document.getElementById('website').value.trim();
     const saveLink = document.getElementById('saveLinkCheckbox').checked;
     const serverSave = document.getElementById('serverCheckbox').checked;
     const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
 
-    // Get selected folder (only accessible when user selects a folder)
-    const storageLocation = storageLocationInput.files.length > 0 
-        ? storageLocationInput.files[0].webkitRelativePath.split('/')[0] 
-        : '';
+    // Get the entered folder path from the text input
+    const storageLocation = storageLocationInput.value.trim();
 
     if (storageLocation && website && latestDataCount > 0) {
         settings.storageLocation = storageLocation;
@@ -116,6 +113,7 @@ document.getElementById('saveSettings').addEventListener('click', function() {
         alert('Please fill in all fields!');
     }
 });
+
 
 // Function to download JSON file
 function downloadFile(content, filename) {
