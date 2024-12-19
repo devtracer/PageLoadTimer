@@ -93,7 +93,7 @@ document.getElementById('saveSettings').addEventListener('click', function() {
     const serverSave = document.getElementById('serverCheckbox').checked;
     const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
 
-    // Get the entered folder path from the text input
+    // Get the entered folder path
     const storageLocation = storageLocationInput.value.trim();
 
     if (storageLocation && website && latestDataCount > 0) {
@@ -103,16 +103,26 @@ document.getElementById('saveSettings').addEventListener('click', function() {
         settings.latestDataCount = latestDataCount;
         settings.serverSave = serverSave;
 
-        // Save settings as JSON
         const settingsJson = JSON.stringify(settings);
-        downloadFile(settingsJson, 'settings.json');
 
-        alert('Settings saved!');
-        document.getElementById('settingsMenu').style.display = 'none';
+        // Use the Chrome downloads API to save the file
+        chrome.downloads.download({
+            url: URL.createObjectURL(new Blob([settingsJson], { type: 'application/json' })),
+            filename: `${storageLocation}/settings.json`, // Save inside the user-specified folder
+            conflictAction: 'overwrite'
+        }, function(downloadId) {
+            if (chrome.runtime.lastError) {
+                alert(`Error: ${chrome.runtime.lastError.message}`);
+            } else {
+                alert('Settings saved successfully!');
+                document.getElementById('settingsMenu').style.display = 'none';
+            }
+        });
     } else {
         alert('Please fill in all fields!');
     }
 });
+
 
 
 // Function to download JSON file
