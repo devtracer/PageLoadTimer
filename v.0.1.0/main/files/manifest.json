@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "PageLoadTimerExtension v1.0.0",
+  "version": "1.0",
+  "description": "An extension that measures and displays the load time of web pages, enhancing your browsing experience..",
+  "icons": {
+    "16": "clock.png",
+    "48": "clock.png", 
+    "128": "clock.png" 
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "clock.png",
+    "badge": {
+      "text": "\u200B$" // Placeholder for the load time
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
