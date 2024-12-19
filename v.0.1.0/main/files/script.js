@@ -75,9 +75,14 @@ document.getElementById('closeSettings').addEventListener('click', function() {
 });
 
 // Open folder picker dialog when user clicks "Browse Folder" button
-document.getElementById('browseFolderBtn').addEventListener('click', function() {
+document.getElementById('browseFolderBtn').addEventListener('click', function(event) {
+    // Prevent default behavior (if any) and stop event propagation
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Trigger the storage input click
     const storageInput = document.getElementById('storageLocation');
-    // storageInput.click(); // Trigger the folder picker dialog
+    storageInput.click();
 });
 
 // Function to save settings (store as JSON)
