@@ -1,3 +1,12 @@
+const pageUrl = window.location.href; // Get the current page URL
+const loadTime = performance.now(); // Get the load time
+
+// Send both the URL and load time to the background script
+chrome.runtime.sendMessage({
+  action: "setLoadTime",
+  url: pageUrl,
+  loadTime: loadTime
+});
 // Record the start time when the script is executed
 const startTime = performance.now();
 
