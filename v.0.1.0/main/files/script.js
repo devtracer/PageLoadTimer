@@ -74,26 +74,17 @@ document.getElementById('closeSettings').addEventListener('click', function() {
     settingsMenu.style.display = 'none';
 });
 
-// Open folder input field when user clicks "Browse Folder" button
-document.getElementById('browseFolderBtn').addEventListener('click', function(event) {
-    // Prevent default behavior (if any) and stop event propagation
-    event.preventDefault();
-    event.stopPropagation();
-
-    // Focus the text input for manual folder entry
-    const storageInput = document.getElementById('storageLocation');
-    storageInput.style.display = 'block'; // Ensure the input is visible
-    storageInput.focus(); // Focus on the input for the user
-});
-
-document.getElementById('saveSettings').addEventListener('click', async function() {
-    const storageLocationInput = document.getElementById('storageLocation');
-    const website = document.getElementById('website').value.trim();
+// Function to save settings (store as JSON)
+document.getElementById('saveSettings').addEventListener('click', function() {
+    const website = document.getElementById('website').value;
     const saveLink = document.getElementById('saveLinkCheckbox').checked;
     const serverSave = document.getElementById('serverCheckbox').checked;
     const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
 
-    const storageLocation = storageLocationInput.value.trim();
+    // Get selected folder (only accessible when user selects a folder)
+    const storageLocation = storageLocationInput.files.length > 0 
+        ? storageLocationInput.files[0].webkitRelativePath.split('/')[0] 
+        : '';
 
     if (storageLocation && website && latestDataCount > 0) {
         settings.storageLocation = storageLocation;
@@ -102,35 +93,16 @@ document.getElementById('saveSettings').addEventListener('click', async function
         settings.latestDataCount = latestDataCount;
         settings.serverSave = serverSave;
 
+        // Save settings as JSON
         const settingsJson = JSON.stringify(settings);
+        downloadFile(settingsJson, 'settings.json');
 
-        try {
-            // Request a file handle
-            const fileHandle = await window.showSaveFilePicker({
-                suggestedName: 'settings.json',
-                types: [{
-                    description: 'JSON Files',
-                    accept: { 'application/json': ['.json'] }
-                }]
-            });
-
-            // Write to the file
-            const writable = await fileHandle.createWritable();
-            await writable.write(settingsJson);
-            await writable.close();
-
-            alert('Settings saved!');
-            document.getElementById('settingsMenu').style.display = 'none';
-        } catch (err) {
-            console.error('Save canceled or failed:', err);
-            alert('Failed to save settings!');
-        }
+        alert('Settings saved!');
+        document.getElementById('settingsMenu').style.display = 'none';
     } else {
         alert('Please fill in all fields!');
     }
 });
-
-
 
 // Function to download JSON file
 function downloadFile(content, filename) {
