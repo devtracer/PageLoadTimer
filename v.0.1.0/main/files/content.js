@@ -22,14 +22,33 @@ document.addEventListener('DOMContentLoaded', () => {
 // Measure when the window has fully loaded
 window.addEventListener('load', () => {
   const endTime = performance.now();
-  const loadTime = endTime - startTime;
+  let loadTime = ((endTime - startTime) / 1000).toFixed(2);
 
   // Send the complete load time
   chrome.runtime.sendMessage({ action: "setLoadTime", loadTime });
 
+  // Access settings from storage
+  chrome.storage.local.get("settings", function (result) {
+      if (result.settings && result.settings.website) {
+          const pageUrl = window.location.href;
+
+          if (pageUrl.includes(result.settings.website)) {
+              // Save the load time for this page
+              chrome.storage.local.get("data", function (dataResult) {
+                  const data = dataResult.data || [];
+                  data.push({ pageUrl, loadTime });
+
+                  chrome.storage.local.set({ data }, function () {
+                      console.log("Load time saved successfully.");
+                  });
+              });
+          }
+      }
+  });
+
   // Optional: Log performance entries for more insights
   const performanceEntries = performance.getEntriesByType("navigation");
   if (performanceEntries.length > 0) {
-    console.log(performanceEntries[0]);
+      console.log(performanceEntries[0]);
   }
 });

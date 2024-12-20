@@ -1,16 +1,35 @@
-// Sample data for graph
-const sampleData = {
-    websites: ["google.com", "yahoo.com", "example.com", "github.com"],
-    loadTimes: [1.2, 2.5, 3.0, 0.8] // Load times in seconds
+// Declare sampleData globally to be accessible
+let sampleData = {
+    websites: [],
+    loadTimes: []
 };
 
-// Store the settings data
-let settings = {
-    storageLocation: "",
-    website: "",
-    saveLink: false,
-    latestDataCount: 5
-};
+// Function to retrieve load time data from local storage and format it for the graph
+function getGraphData() {
+    chrome.storage.local.get("data", function(result) {
+        const websites = [];
+        const loadTimes = [];
+
+        // Iterate through stored data and format
+        if (result.data) {
+            result.data.forEach(item => {
+                websites.push(item.url || ""); // If no URL, add an empty string
+                loadTimes.push(item.loadTime); // Assuming loadTime is already a number
+            });
+        }
+
+        // Update sampleData for the graph
+        sampleData = {
+            websites: websites,
+            loadTimes: loadTimes
+        };
+
+        console.log(sampleData);  // Log the data (or use it for graphing purposes)
+    });
+}
+
+// Call the function to get and format the data for graph
+getGraphData();
 
 // Global variable to store the chart instance
 let myChart = null;
@@ -74,7 +93,6 @@ document.getElementById('closeSettings').addEventListener('click', function() {
     settingsMenu.style.display = 'none';
 });
 
-// Function to save settings (store as JSON)
 document.getElementById('saveSettings').addEventListener('click', function () {
     const website = document.getElementById('website').value;
     const saveLink = document.getElementById('saveLinkCheckbox').checked;
@@ -89,35 +107,17 @@ document.getElementById('saveSettings').addEventListener('click', function () {
             serverSave: serverSave
         };
 
-        // Prepare settings.json
-        const settingsJson = JSON.stringify(settings);
-
-        // Prepare data.json with empty object
-        const dataJson = JSON.stringify({});
-
-        // Download both files
-        downloadFile(settingsJson, 'settings.json');
-        downloadFile(dataJson, 'data.json');
-
-        alert('Settings saved and files downloaded!');
-        document.getElementById('settingsMenu').style.display = 'none';
+        // Save settings to chrome.storage.local
+        chrome.storage.local.set({settings: settings}, function() {
+            alert('Settings saved!');
+            document.getElementById('settingsMenu').style.display = 'none';
+        });
     } else {
         alert('Please fill in all fields!');
     }
 });
 
 // Helper function to trigger file download
-function downloadFile(content, fileName) {
-    const blob = new Blob([content], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName;
-    link.click();
-    URL.revokeObjectURL(link.href);
-}
-
-
-// Function to download JSON file
 function downloadFile(content, filename) {
     const blob = new Blob([content], { type: 'application/json' });
     const link = document.createElement('a');
