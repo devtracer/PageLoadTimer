@@ -114,8 +114,10 @@ document.getElementById('showoutput').addEventListener('click', function() {
     // Filter by amount if input is provided
     if (amountInput && !isNaN(amountInput)) {
         const amount = parseInt(amountInput);
-        filteredWebsites = filteredWebsites.slice(0, amount);
-        filteredLoadTimes = filteredLoadTimes.slice(0, amount);
+
+        // Adjust slice to get the last 'amount' entries
+        filteredWebsites = filteredWebsites.slice(-amount);
+        filteredLoadTimes = filteredLoadTimes.slice(-amount);
     } else if (amountInput) {
         alert('Please enter a valid number for the amount of records.');
         return;  // Exit if input is invalid
