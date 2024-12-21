@@ -181,5 +181,20 @@ function downloadFile(content, filename) {
     link.click();
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listeners to the buttons
+    const sourceCodeButton = document.getElementById('sourceCodeBtn');
+    const termsButton = document.getElementById('termsBtn');
+
+    sourceCodeButton.addEventListener('click', function() {
+        window.open('https://github.com/devtracer/PageLoadTimerExtension/tree/main', '_blank');
+    });
+
+    termsButton.addEventListener('click', function() {
+        window.open('https://github.com/devtracer/PageLoadTimerExtension/blob/main/TermsConditions.md', '_blank');
+    });
+});
+
+
 // Initialize graph data when page loads
 getGraphData();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:*;">
     <title>Website Load Time Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,6 +12,12 @@
     <div class="container">
         <h1>Page Load Timer Extension</h1>
         <button id="showGraphBtn" class="btn">Show Load Time Graph</button>
+        
+        <!-- New Buttons for Source Code and Terms -->
+        <div class="links">
+            <button id="sourceCodeBtn" class="btn">Source Code</button>
+            <button id="termsBtn" class="btn">Terms and Conditions</button>
+        </div>
     </div>
 
     <!-- Popup for Graph -->
