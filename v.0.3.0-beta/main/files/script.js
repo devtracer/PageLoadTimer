@@ -13,8 +13,13 @@ function getGraphData() {
         // Iterate through stored data and format
         if (result.data) {
             result.data.forEach(item => {
-                websites.push(item.url || ""); // If no URL, add an empty string
-                loadTimes.push(item.loadTime); // Assuming loadTime is already a number
+                // Validate URL and loadTime before adding to the arrays
+                if (item.url && item.url.trim() !== "" && item.loadTime > 0) {
+                    websites.push(item.url);
+                    loadTimes.push(item.loadTime);
+                } else {
+                    console.log("Skipping invalid data:", item);  // Log invalid data
+                }
             });
         }
 
