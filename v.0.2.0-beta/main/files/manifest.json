@@ -8,7 +8,7 @@
     "48": "clock.png",
     "128": "clock.png"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "downloads"],
   "host_permissions": ["http://localhost:3000/*"],
   "content_scripts": [
     {

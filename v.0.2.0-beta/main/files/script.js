@@ -28,7 +28,7 @@ function getGraphData() {
     });
 }
 
-// Call the function to get and format the data for graph
+// Call the function to get and format the data for the graph
 getGraphData();
 
 // Global variable to store the chart instance
@@ -85,6 +85,17 @@ document.getElementById('closeGraph').addEventListener('click', function() {
 document.getElementById('settingsBtn').addEventListener('click', function() {
     const settingsMenu = document.getElementById('settingsMenu');
     settingsMenu.style.display = 'flex';
+    
+    // Load settings from chrome.storage.local and populate the form
+    chrome.storage.local.get('settings', function(result) {
+        const settings = result.settings || {};
+        
+        // Populate the fields with saved settings
+        document.getElementById('website').value = settings.website || '';
+        document.getElementById('saveLinkCheckbox').checked = settings.saveLink || false;
+        document.getElementById('serverCheckbox').checked = settings.serverSave || false;
+        document.getElementById('latestDataCount').value = settings.latestDataCount || '';
+    });
 });
 
 // Function to close the settings menu
@@ -93,6 +104,7 @@ document.getElementById('closeSettings').addEventListener('click', function() {
     settingsMenu.style.display = 'none';
 });
 
+// Save settings to chrome.storage.local
 document.getElementById('saveSettings').addEventListener('click', function () {
     const website = document.getElementById('website').value;
     const saveLink = document.getElementById('saveLinkCheckbox').checked;
@@ -126,11 +138,23 @@ function downloadFile(content, filename) {
     link.click();
 }
 
-// Function to save load time data
+// Function to save load time data and settings
 document.getElementById('saveDataBtn').addEventListener('click', function() {
-    const data = {
-        websites: sampleData.websites,
-        loadTimes: sampleData.loadTimes
-    };
-    downloadFile(JSON.stringify(data), 'load_time_data.json');
+    // Get settings from chrome.storage.local
+    chrome.storage.local.get('settings', function(result) {
+        const settings = result.settings || { Settings: "" };
+
+        // Prepare the data object including settings
+        const data = {
+            websites: sampleData.websites,
+            loadTimes: sampleData.loadTimes,
+            settings: settings
+        };
+
+        // Print the data to the console
+        console.log("Data to be saved:", data);
+
+        // Trigger file download for load time data
+        downloadFile(JSON.stringify(data), 'analyse.json');
+    });
 });
