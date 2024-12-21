@@ -28,9 +28,6 @@ function getGraphData() {
     });
 }
 
-// Call the function to get and format the data for graph
-getGraphData();
-
 // Global variable to store the chart instance
 let myChart = null;
 
@@ -84,8 +81,11 @@ function showGraph(filteredWebsites, filteredLoadTimes) {
         },
         options: {
             scales: {
+                x: {
+                    display: false,  // Hide the X-axis labels
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true  // Ensure the Y-axis starts from zero
                 }
             }
         }
@@ -95,6 +95,7 @@ function showGraph(filteredWebsites, filteredLoadTimes) {
     document.getElementById("graphSection").style.display = "block";
     document.getElementById("tableSection").style.display = "none";
 }
+
 
 // Event listener for showing the data (either graph or table)
 document.getElementById('showoutput').addEventListener('click', function() {
@@ -115,19 +116,22 @@ document.getElementById('showoutput').addEventListener('click', function() {
         const amount = parseInt(amountInput);
         filteredWebsites = filteredWebsites.slice(0, amount);
         filteredLoadTimes = filteredLoadTimes.slice(0, amount);
+    } else if (amountInput) {
+        alert('Please enter a valid number for the amount of records.');
+        return;  // Exit if input is invalid
     }
 
     // Show table or graph based on filtered data
     if (filteredWebsites.length > 0) {
-        showTable(filteredWebsites, filteredLoadTimes);
-        showGraph(filteredWebsites, filteredLoadTimes);
+        showTable(filteredWebsites, filteredLoadTimes); // Show the table first
+        showGraph(filteredWebsites, filteredLoadTimes); // Then show the graph (you can remove one of these based on user preference)
     } else {
         alert("No data found for the provided filters.");
     }
 });
 
 // Function to close the graph or table popup with fade effect
-document.getElementById('closeGraph').addEventListener('click', function() {
+function closePopup() {
     const graphPopup = document.getElementById('dataPopup');
     
     // Start the fade-out transition
@@ -138,7 +142,10 @@ document.getElementById('closeGraph').addEventListener('click', function() {
         graphPopup.style.display = 'none';
         graphPopup.style.opacity = '1'; // Reset opacity for the next time
     }, 300); // Match the transition duration (300ms)
-});
+}
+
+document.getElementById('closeGraph').addEventListener('click', closePopup);
+document.getElementById('closeTable').addEventListener('click', closePopup);
 
 // Function to close the settings menu
 document.getElementById('closeSettings').addEventListener('click', function() {
