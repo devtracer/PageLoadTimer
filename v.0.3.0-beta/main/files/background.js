@@ -26,7 +26,7 @@ function saveLoadTimeLocally(url, loadTime) {
   // Displaying the page load time on the extension's icon badge
   chrome.runtime.onMessage.addListener((request) => {
     if (request.action === "setLoadTime") {
-      const formattedTime = request.loadTime.toString(); // Convert to string
+        const formattedTime = (request.loadTime / 1000).toFixed(2); // Convert to string
       chrome.action.setBadgeText({ text: formattedTime }, () => {
           if (chrome.runtime.lastError) {
               console.error("Failed to set badge text:", chrome.runtime.lastError.message);
