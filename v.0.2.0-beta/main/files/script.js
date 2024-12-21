@@ -4,11 +4,17 @@ let sampleData = {
     loadTimes: []
 };
 
+
+
 // Function to retrieve load time data from local storage and format it for the graph
 function getGraphData() {
     chrome.storage.local.get("data", function(result) {
         const websites = [];
         const loadTimes = [];
+
+        chrome.storage.local.get('settings', function(result) {
+            const settings_entry = result.settings || { Settings: "" };
+        });
 
         // Iterate through stored data and format
         if (result.data) {
@@ -22,6 +28,7 @@ function getGraphData() {
         sampleData = {
             websites: websites,
             loadTimes: loadTimes
+            settings: settings_entry
         };
 
         console.log(sampleData);  // Log the data (or use it for graphing purposes)

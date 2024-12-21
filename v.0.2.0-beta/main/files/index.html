@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Python</title>
+</head>
+<body>
+    <h1>Run Python Script from Web</h1>
+    <button id="runPythonBtn">Run Python Script</button>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('runPythonBtn').addEventListener('click', function() {
+            fetch('/run-python')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('output').textContent = data.output || data.error;
+                })
+                .catch(error => {
+                    document.getElementById('output').textContent = "Error: " + error;
+                });
+        });
+    </script>
+</body>
+</html>
