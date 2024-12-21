@@ -147,52 +147,6 @@ function closePopup() {
 document.getElementById('closeGraph').addEventListener('click', closePopup);
 document.getElementById('closeTable').addEventListener('click', closePopup);
 
-// Function to close the settings menu
-document.getElementById('closeSettings').addEventListener('click', function() {
-    const settingsMenu = document.getElementById('settingsMenu');
-    settingsMenu.style.display = 'none';
-});
-
-// Function to display the settings menu
-document.getElementById('settingsBtn').addEventListener('click', function() {
-    const settingsMenu = document.getElementById('settingsMenu');
-    settingsMenu.style.display = 'flex';
-});
-
-// Function to save settings
-document.getElementById('saveSettings').addEventListener('click', function () {
-    const website = document.getElementById('website').value;
-    const saveLink = document.getElementById('saveLinkCheckbox').checked;
-    const serverSave = document.getElementById('serverCheckbox').checked;
-    const latestDataCount = parseInt(document.getElementById('latestDataCount').value, 10);
-
-    if (website && latestDataCount > 0) {
-        const settings = {
-            website: website,
-            saveLink: saveLink,
-            latestDataCount: latestDataCount,
-            serverSave: serverSave
-        };
-
-        // Save settings to chrome.storage.local
-        chrome.storage.local.set({settings: settings}, function() {
-            alert('Settings saved!');
-            document.getElementById('settingsMenu').style.display = 'none';
-        });
-    } else {
-        alert('Please fill in all fields!');
-    }
-});
-
-// Helper function to trigger file download
-function downloadFile(content, filename) {
-    const blob = new Blob([content], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = filename;
-    link.click();
-}
-
 // Function to save load time data
 document.getElementById('saveDataBtn').addEventListener('click', function() {
     const data = {
@@ -211,6 +165,14 @@ document.getElementById('showGraphBtn').addEventListener('click', function() {
     document.getElementById('dataPopup').style.display = 'block';
 });
 
+// Helper function to trigger file download
+function downloadFile(content, filename) {
+    const blob = new Blob([content], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
 
 // Initialize graph data when page loads
 getGraphData();
