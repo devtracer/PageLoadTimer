@@ -24,7 +24,7 @@ The icon's credit:
         ![image](https://github.com/user-attachments/assets/5d4afaa1-a8f0-4e22-a716-f4e80f11501c)
 
 
-    - Enter the folder and select the "main" folder again:
+    - Enter the folder and select the v.0.3.0-beta and select the "main" folder again:
 
         ![image](https://github.com/user-attachments/assets/8426846e-3169-4489-9ad7-c67b3e672e00)
 
