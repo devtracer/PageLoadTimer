@@ -202,5 +202,15 @@ document.getElementById('saveDataBtn').addEventListener('click', function() {
     downloadFile(JSON.stringify(data), 'load_time_data.json');
 });
 
+document.getElementById('closeDataPopup').addEventListener('click', function() {
+    document.getElementById('dataPopup').style.display = 'none';
+});
+
+// You might also want to ensure that the popup is shown when the button is clicked
+document.getElementById('showGraphBtn').addEventListener('click', function() {
+    document.getElementById('dataPopup').style.display = 'block';
+});
+
+
 // Initialize graph data when page loads
 getGraphData();

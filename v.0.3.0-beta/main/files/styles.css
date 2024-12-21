@@ -16,23 +16,51 @@ body {
     text-align: center;
 }
 
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 400px;
+    height: 500px;
+}
+
+.container {
+    text-align: center;
+}
+
+/* General Button Style */
 .btn {
-    display: block;
-    width: 100%;
-    background-color: #4CAF50;
+    display: inline-block; /* Adjust to inline for flexibility */
+    background-color: #4CAF50; /* Green background */
     color: white;
-    padding: 20px 40px;
+    padding: 15px 30px; /* Adjust padding for better proportions */
     font-size: 18px;
     border: none;
     border-radius: 5px;
     margin: 10px 0;
     cursor: pointer;
-    transition: background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    text-align: center;
+    width: 100%;
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Darker green on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+    transform: scale(1.05); /* Slight scale effect on hover */
 }
+
+.btn:focus {
+    outline: none; /* Remove focus outline */
+}
+
 
 /* Popup Styles */
 .popup {
@@ -63,22 +91,37 @@ body {
     overflow-y: auto; /* Make it scrollable */
 }
 
-/* Close Button */
+/* Close Button Style */
 .close-btn {
-    background-color: red;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
+    background-color: #f44336; /* Red color */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Light shadow */
+    transition: all 0.3s ease; /* Smooth transition for hover */
 }
 
 .close-btn:hover {
-    background-color: darkred;
+    background-color: #e53935; /* Darker red on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+    transform: scale(1.1); /* Slight scale effect on hover */
 }
+
+.close-btn:focus {
+    outline: none; /* Remove focus outline */
+}
+
+
 
 /* Centering Chart */
 #loadTimeChart {
